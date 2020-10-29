@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+
+    <!-- 只有使用比较新的vue版本才能这样定义使用，官方推荐使用这种方法 -->
+    <!-- 如果有多处没命名的插槽则会报错，因为别的插槽可能没绑定这些量,所以建议插槽命名来使用 -->
+    <current-user>
+      <template v-slot:myname='slotProp'>
+        {{slotProp.u.lastName}}---{{slotProp.n}}
+      </template>
+    </current-user>
+
+  </div>
+
+  <!-- 定义一个组件，如果要想父组件也可以访问子组件的内容，则必须自定义一个变量绑定需要访问的子组件的名字-->
+  <!-- 并且可以绑定其组件身上的任意值供父组件访问 -->
+  <template id='mycom'>
+      <span>
+        <slot name='myname' :u='user' :n='fullName'>{{user.firstName}}</slot>
+        
+      </span>
+  </template>
+
+  
+  <script src="../库/vue-2.6.11.js"></script>
+  <script type="text/javascript">
+
+    const v = new Vue({
+      el:'#app',
+      data:{
+        message:'你好'
+      },
+
+      // 注册组件
+      components:{
+        'current-user':{
+          template:'#mycom',
+          data() {
+            return {
+              user:{firstName:'li',lastName:'tie'},
+              fullName:'Bruno Mars'
+            }
+          },
+        }
+      }
+
+    })
+  </script>
+</body>
+</html>

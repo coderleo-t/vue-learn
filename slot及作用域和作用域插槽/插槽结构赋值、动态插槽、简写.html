@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+
+    <!-- 当插槽绑定的值里面可能没有star时防止出错可以直接赋值 -->
+    <!-- 可以用#来代替v-slot: -->
+    <current-user>
+      <template #myname='slotProp={star:"Taylor Swift"}'>
+        {{slotProp.star}}
+      </template>
+    </current-user>
+
+    <!-- 动态插槽 -->
+    <current-user>
+      <template #[click等其他事件]>
+        
+      </template>
+    </current-user>
+
+  </div>
+
+
+  <template id='mycom'>
+      <span>
+        <slot name='myname' :u='user'>{{user.firstName}}</slot>
+        <slot :f='fullName'></slot>
+      </span>
+  </template>
+
+  
+  <script src="./../库/vue-2.6.11.js"></script>
+  <script type="text/javascript">
+
+    const v = new Vue({
+      el:'#app',
+      data:{
+        message:'你好'
+      },
+
+      // 注册组件
+      components:{
+        'current-user':{
+          template:'#mycom',
+          data() {
+            return {
+              user:{firstName:'li',lastName:'tie'},
+              fullName:'Bruno Mars'
+            }
+          },
+        }
+      }
+
+    })
+  </script>
+</body>
+</html>

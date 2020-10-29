@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app" >
+    <myanim></myanim>
+  </div>
+
+
+  <script src="./../库/vue-2.6.11.js"></script>
+  <script type="text/javascript">
+
+
+
+// 创建第三个组件，模板只能在注册了他的模板中使用
+var mycom = {
+      template:`<button @click='myparent'>点击访问父组件的内容</button>`,
+      methods: {
+        myparent(){
+          // 利用此方法可以访问根组件组件的内容
+          const key = this.$root.name
+          console.log(key)
+        }
+      },
+      data() {
+        return {
+          name:'Bruno Mars'
+        }
+      },
+    }
+
+    // 创建第二个组件,模板只能在注册了他的模板中使用
+    var myanim = {
+      template:`<div><button @click='myparent'>点击访问父组件的内容</button><mycom></mycom></div>`,
+      methods: {
+        myparent(){
+          // 利用此方法可以访问父组件的内容
+          const key = this.$parent.name
+          console.log(key)
+        }
+      },
+      data() {
+        return {
+          name:'Taylow Swift'
+        }
+      },
+      components:{
+          mycom
+        }
+    }
+
+    // 创建vue实例，为第一个组件
+    const v = new Vue({
+      el:'#app',
+      data:{
+        result:true,
+        isShow:false,
+        name:'hha'
+      },
+      components:{
+        myanim
+      }
+     
+    })
+
+
+  </script>
+</body>
+</html>

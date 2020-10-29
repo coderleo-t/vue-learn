@@ -1,0 +1,18 @@
+
+runtimecompiler模式：
+new Vue ({
+      el:'#app',
+      template:'...'    
+})
+会将template模板变成虚拟语法树(ast),将将ast变为render函数，再变成虚拟dom，再挂载到ui界面
+
+
+runtimeonly模式：
+new Vue ({
+      el:'#app',
+      render:h=>h(app)  
+})
+
+h为createElement('标签',{属性},[html中的内容]),里面的内容也可以直接写入一个模板app
+它有个开发依赖要下载vue-template-complier,它会跳过编译成ast直接变为render函数
+建议使用runtimeonly模式，会使效率更高，代码量更小。

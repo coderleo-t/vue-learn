@@ -1,0 +1,4 @@
+commonjs不能单独使用要配合nodejs使用
+
+导出方式：module.exports={....}
+导入方式：const f = require('./index.js')

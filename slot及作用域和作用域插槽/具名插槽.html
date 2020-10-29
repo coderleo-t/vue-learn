@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <!-- 使用具名插槽，如果想使用默认插槽可以自定义名字,这种方法快弃用了 -->
+    <!-- <myp><button slot='a'>haha</button></myp>
+    <myp><button slot='b'>hehe</button></myp>
+    <myp><button slot='c'>xixi</button></myp> -->
+
+
+  <!-- 利用v-slot调用具名插槽,直接匹配到name为header的插槽,并用template里面的内容代替 -->
+  <!-- 中间默认为default的插槽也可以不用加v-slot -->
+  <!-- v-slot的用法，官方建议这么用,如果插槽没有name那么默认名字为default -->
+  <myp>
+    <template v-slot:header>
+      <h1>Here might be a page title</h1>
+    </template>
+
+    <p>A paragraph for the main content.</p>
+    <p>And another one.</p>
+
+    <template v-slot:footer>
+      <p>Here's some contact info</p>
+    </template>
+  </myp>
+
+
+
+  </div>
+
+  <!-- 定义的一个具名插槽的组件，这种方法快弃用了 -->
+  <!-- <template id="test">
+    <div>
+      <span>哈哈</span>
+      <slot name='a'></slot>
+      <slot name='b'></slot>
+      <slot name='c'></slot>
+    </div>
+  </template> -->
+
+
+  <template id="test">
+    <div class="container">
+      <slot name="header"></slot>
+      <slot></slot>
+      <slot name="footer"></slot>
+    </div>
+  </template>
+
+  
+  <script src="./../库/vue-2.6.11.js"></script>
+  <script type="text/javascript">
+
+    const v = new Vue({
+      el:'#app',
+      data:{
+        message:'你好'
+      },
+
+      // 注册组件
+      components:{
+        // 组件注册的方法、data必须都在组件名字内执行
+        myp:{
+          template:'#test'
+        }
+      }
+
+    })
+  </script>
+</body>
+</html>

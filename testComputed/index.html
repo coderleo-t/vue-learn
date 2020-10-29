@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+ 
+</head>
+<body>
+  <div id="app">
+    <span >{{test()}}</span>
+    <span>{{mynumber}}</span>
+  </div>
+
+<script src="./../../库/vue-2.6.11.js"></script>
+<script>
+  
+  const v = new Vue({
+    el:'#app',
+    data:{
+      firstname:'AAA',
+      lastname:'Mars',
+      number1 :12,
+      number2 :13
+    },
+    methods: {
+      test(){
+        return 18
+      }
+    },
+    computed: {
+      // 默认计算属性函数里面有两个函数：一个set和一个get，如果不传参数默认调用get方法，传参数的时候先调用set再调用get
+      // 计算默认是可以缓存的，如果数据每次没有改变则会选用原来的数据并不会重新参与计算
+      // fullname在其他地方调用的时候只能作为一个数值调用，不能作为一个函数调用
+      fullname: {
+        // 一般情况不写set方法,在控制台写fullname='xxx'会调用此方法
+        set: function() {
+          console.log("12112121212")
+        },
+        get: function () {
+          return this.firstname + ' ' + this.lastname
+        }
+      },
+
+      // 一般不写set的简写方法,mynumber会直接作为一个值，如果number1和number2改变了会重新计算
+      mynumber(){
+        return this.number1 + this.number2
+      }
+
+    },
+  })
+  
+</script>
+</body>
+</html>

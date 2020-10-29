@@ -1,0 +1,1 @@
+在组件上使用ref='xxx'的时候，再用this.$refs.xxx.$el就可以获得组件里面的全部原生dom对象

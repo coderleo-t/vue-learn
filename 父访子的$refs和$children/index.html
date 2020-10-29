@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- 点击触发父组件里的函数,访问通过children访问子组件的方式 -->
+    <button @click='visit'>点击访问父组件中定义函数</button>
+
+    <!-- 点击触发父组件里的函数,访问通过refs访问子组件的方式 -->
+    <button @click='visit1'>点击访问父组件中定义函数</button>
+
+    <!-- 子组件的内容，为它绑定ref,并取个名字,父组件可以通过$refs来访问此组件内的内容 -->
+    <mycom ref='aaa'></mycom>
+  </div>
+  
+  
+
+  <script src="./../库/vue-2.6.11.js"></script>
+  <script type="text/javascript">
+
+    const mycom = {
+      template:`<button>我是子组件</button>`,
+      data(){
+        return {
+          name:'Taylow Swift',
+          message:'haha'
+        }
+    }
+    }
+
+    // 创建vue实例
+    const v = new Vue({
+      el:'#app',
+      data:{
+        name:'Bruno Mars'
+      },
+      components:{
+        mycom
+      },
+      methods: {
+        // 点击可以访问第1个子组件中的name，用的不多。
+        visit(){
+          console.log(this.$children[0].name)
+        },
+
+        // 点击可以访问子组件上绑定了ref的组件内的内容
+        visit1(){
+          console.log(this.$refs.aaa.message)
+        }
+      },
+    })
+  </script>
+</body>
+</html>

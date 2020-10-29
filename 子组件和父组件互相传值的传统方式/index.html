@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app" >
+    <!-- 父组件的内容传到子组件 -->
+    <myanim :f='result'></myanim>
+
+    <!-- 当$emit函数触发时会执行里面的@launcher通常父组件会定义一个函数来接收 -->
+    <myanim @launcher='accept'></myanim>
+  </div>
+
+  
+  <!-- js代码 -->
+  <script src="./../库/vue-2.6.11.js"></script>
+  <script type="text/javascript">
+    var myanim = {
+      // 在子组件中定义一个prop来储存父组件
+      props:['f'],
+      // 通过子组件内的第三方事件来触发子组件函数向父组件传值s
+      template:`<div><span>{{f}}</span><button @click='transf'>点击向父组件传值</button></div>`,
+      data() {
+        return {
+          name:'Bruno Mars'
+        }
+      },
+      methods: {
+       transf() {
+        //  自定义自己组件上的事件,并可以传值
+        // 当定义$emit的函数触发时就会启动子组件内部自定义的事件@launcher并可以传参
+         this.$emit('launcher',this.name)
+       }
+      },
+    }
+
+    // 创建vue实例
+    const v = new Vue({
+      el:'#app',
+      data:{
+        result:3,
+        name:'Taylow Swift'
+      },
+      components:{
+        myanim
+      },
+      methods: {
+        // 接收子组件传过来的值
+        accept(value){
+          this.name = value
+          console.log(this.name)
+        }
+      },
+    })
+
+
+  </script>
+</body>
+</html>

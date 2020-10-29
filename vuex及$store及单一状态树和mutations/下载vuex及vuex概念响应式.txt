@@ -1,0 +1,24 @@
+vuex是一个专为vue.js应用程序开发的状态管理模式
+采用集中式储存管理应用的所有组件状态
+
+因为我们自己封装的难以做到响应式，所有需要vuex
+
+命令：npm install vuex --save
+导入：import Vuex from 'vuex'
+Vue.use(Vuex)
+
+
+创建：const store = new Vuex.store({
+	state:{},
+	mutations:{},
+	actions:{},
+	getters:{},
+	modules:{}
+})
+只有state里面的初始化内容才是响应式的，如果利用mutations往state里面原始的加对象则不是响应式，
+但可以利用数组的方法的响应式：splice或者Vue.set(对象,'名字'，‘值’)
+
+delete 对象.值   不是响应式的
+Vue.delete(对象，‘值’)为响应式
+
+mutations的方法都是同步的，如果是异步则不会监听

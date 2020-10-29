@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- javacript代码 -->
+  <script src="../库/vue-2.6.11.js"></script>
+  <script src="../库/vue-router-3.0.1.js"></script>
+  <script src="../库/vuex-v3.1.3.js"></script>
+  <script type="text/javascript"> 
+  window.onload = function () {
+    // 创建组件1
+    const mycom = {
+      template:`<div>hahaha</div>`,
+      methods: {
+        
+      },
+    }
+
+    // 创建组件2
+    const my = {
+      // 可以通过$store直接读取store中state的students,但官方推荐用计算属性读
+      template:`<div><span>{{mystudent}}</span><button @click='increase'>添加一个身高</button></div>`,
+      computed: {
+        mystudent() {
+          return this.$store.state.students
+        }
+      },
+      methods: {
+        // 如果是同步的则利用这个方法修改store里面的值，而不要直接修改
+        increase () {
+          // 提交风格，推荐这样，也可以直接传一个参数函数名，要传值后面需再加一个参数
+          this.$store.commit({
+            type:'myIncrement',
+            height:{
+              BrunoMars:18.1,
+              TaylowSwift:16.1
+            }
+          })
+        }
+
+      }
+    }
+
+    // 创建routes
+    const routes = [
+      {path:'/login',component:mycom},
+      {path:'/logout',component:my}
+    ]
+
+    // 创建路由对象
+    const r = new VueRouter({
+      routes,
+      // 将地址栏的#去掉
+      mode:'history'
+    })
+
+    // 创建vuex状态管理,注意Store前面要大写
+    // 可以通过$store直接读取store中state的students，但官方不建议这样修改state的值
+    const store = new Vuex.Store({
+      state:{
+        students:{
+          name:'Bruno Mars',
+          age:18,
+          gender:'male'
+        }
+      },
+
+      // 同步的方法写在这里面
+      mutations:{
+        // 第一个参数默认就是state，第二个参数为payload也就是用户传过来的对象
+        // 通常都是使用常量来表示函数名字，如导出一个常量，export const SOME_MUTATION = 'SOME_MUTATION'
+        // 则函数名字就应该为[SOME_MUTATION],来防止出错
+        myIncrement (state, payload) {
+          // 这种向对象添加方法不是响应式的state.students.k = payload.height.BrunoMars
+          // 因为不是操作数组没有数组的方法，所以可以用向对象添加值的assign方法
+          state.students = Object.assign({},state.students,payload.height)
+        }
+      },
+
+      // 异步的方法写在这里面
+      actions:{
+
+      },
+
+      // 相当于computed属性,getter 在通过方法访问时，每次都会去进行调用，而不会缓存结果。
+      getters:{
+    
+      },
+
+      // 里面可以再装一个一模一样的store
+      modules:{
+
+      }
+    })
+
+    // 创建vue实例
+    const v = new Vue({
+      el:'#app',
+      data:{
+        name : 'Bruno Mars'
+      },
+      router:r,
+      store
+    })
+
+  }
+
+</script>
+<style>
+  /* 路由的默认类 */
+  .router-link-active {
+    color:red
+  }
+</style>
+</head>
+<body>
+  <div id='app'>
+    <router-link to='/login'>登录</router-link>
+    <router-link to='/logout'>123</router-link>
+    <router-view></router-view>
+  </div>
+
+</body>
+</html>

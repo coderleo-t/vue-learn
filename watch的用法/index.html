@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../库/vue-2.6.11.js"></script>
+  <script>
+    window.onload = function () {
+      const v = new Vue ({
+         data : {
+           name : 'Bruno Mars',
+           age : 19,
+           number : 22
+         },
+         watch: {
+          //  要监听谁就创建谁的函数,第一个参数为number发生改变的值,第二个为发生改变之前的值
+           number (newValue,oldValue) {
+              let fullNumber = newValue + oldValue
+              console.log(fullNumber)
+           }
+         },
+         methods: {
+           change () {
+             this.number += 1
+           }
+         },
+      }).$mount('#app')
+    }
+  </script>
+</head>
+<body>
+  <div id="app">
+    <span>{{number}}</span>
+    <button @click='change'>点击改变number的值</button>
+  </div>
+</body>
+</html>

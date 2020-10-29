@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- javacript代码 -->
+  <script src="../库/vue-2.6.11.js"></script>
+  <script src="../库/vue-router-3.0.1.js"></script>
+  <script type="text/javascript"> 
+  window.onload = function () {
+
+    // 在Vue的原型链中添加一个对象,以后所有的组件都可以访问到这个值
+    Vue.prototype.k = {
+      name:'Bruno Mars'
+    }
+    
+    // 创建组件1
+    const mycom = {
+      template:`<button @click='myproto'>点击访问原型链中的方法</button>`,
+      methods: {
+        myproto() {
+          console.log(this.k.name)
+        }
+      },
+    }
+
+    // 创建vue实例
+    const v = new Vue({
+      el:'#app',
+      data:{
+        name : 'Bruno Mars'
+      },
+      components:{
+        mycom
+      }
+    })
+
+  }
+
+</script>
+<style>
+</style>
+</head>
+<body>
+  <div id='app'>
+    <mycom></mycom>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- javacript代码 -->
+  <script src="../库/vue-2.6.11.js"></script>
+  <script src="../库/vue-router-3.0.1.js"></script>
+  <script type="text/javascript"> 
+  window.onload = function () {
+    // 创建组件1
+    const mycom = {
+      // $route代表的是哪个组件处于活跃状态表示的就是哪个
+      template:`<div><h2>{{$route.params.id}}</h2></div>`
+    }
+
+    const my = {
+      // $route代表的是哪个组件处于活跃状态表示的就是哪个
+      template:`<div><h2>{{$route.query.age}}</h2></div>`
+    }
+
+    // 创建routes4
+    const routes = [
+      // 后面的id接收用params方式传递过来的值,后面可以通过$route来动态取值
+      {path:'/login/:id',component:mycom},
+
+      // 接收用query方式传过来的值,后面不用加东西
+      {path:'/logout',component:my}
+    ]
+
+    // 创建路由对象
+    const r = new VueRouter({
+      routes,
+      // 将地址栏的#去掉
+      mode:'history'
+    })
+
+    // 创建vue实例
+    const v = new Vue({
+      el:'#app',
+      data:{
+        userId:40
+      },
+      router:r,
+      components: {
+        mycom
+      }
+    })
+
+  }
+
+</script>
+<style>
+  /* 路由的默认类 */
+  .router-link-active {
+    color:rgb(230, 22, 22)
+  }
+</style>
+</head>
+<body>
+  <div id='app'>
+    <!-- 用params方法传值 -->
+    <router-link :to='"/login/"+userId'>登录</router-link>
+
+    <!-- 通过对象里面的query方法传值 -->
+    <router-link :to='{path:"/logout",query:{age:18}}'>退出</router-link>
+
+    <router-view></router-view>
+  </div>
+
+</body>
+</html>

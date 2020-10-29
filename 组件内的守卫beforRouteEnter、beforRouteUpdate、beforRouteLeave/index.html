@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- javacript代码 -->
+  <script src="../库/vue-2.6.11.js"></script>
+  <script src="../库/vue-router-3.0.1.js"></script>
+  <script type="text/javascript"> 
+  window.onload = function () {
+    // 创建组件1
+    const mycom = {
+      template:`<div>hahaha</div>`,
+
+      // 设置组件内的守卫,被confirm路由对应的组件之前调用,不能用this,因为这是之前调用组件实例还没创建好
+      beforeRouteEnter (to, from, next) {
+        console.log('哈哈')
+        next()
+      },
+
+      // 在当前路由改变，但是该组件被复用时调用,如在跳转路径/foo/2和/foo/1,
+      // 只是跳转的传的参数不同但展示的组件相同，这个钩子则会在这个情况调用
+      // 可以使用this
+      beforeRouteUpdate (to, from, next) {
+        console.log('嘻嘻')
+        next()
+      },
+
+      // 导航离开该组件对应的组件时调用,可以使用this
+      beforeRouteLeave (to, from, next) {
+        console.log('嘿嘿')
+        next()
+      }
+    }
+
+    // 创建组件2
+    const my = {
+      template:`<div>xixixi</div>`
+    }
+
+    // 创建routes
+    const routes = [
+      {path:'/login',component:mycom},
+      {path:'/logout',component:my,meta:{title:'退出'}}
+    ]
+
+    // 创建路由对象
+    const r = new VueRouter({
+      routes,
+      // 将地址栏的#去掉
+      mode:'history'
+    })
+
+
+    // 创建vue实例
+    const v = new Vue({
+      el:'#app',
+      data:{
+        name : 'Bruno Mars'
+      },
+      router:r,
+      components: {
+        mycom,
+        my
+      }
+    })
+
+  }
+
+</script>
+<style>
+  /* 路由的默认类 */
+  .router-link-active {
+    color:red
+  }
+</style>
+</head>
+<body>
+  <div id='app'>
+    <router-link to='/login'>登录</router-link>
+    <router-link to='/logout'>123</router-link>
+    <router-view></router-view>
+  </div>
+</body>
+</html>

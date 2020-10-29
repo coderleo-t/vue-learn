@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./../库/vue-2.6.11.js"></script>
+  <script>
+    window.onload = () => {
+      /* 指令定义函数提供了几个钩子函数（可选）：
+      bind: 只调用一次，指令第一次绑定到元素时调用，用这个钩子函数可以定义一个在绑定时执行
+                一次的初始化动作。
+      inserted: 被绑定元素插入父节点时调用（父节点存在即可调用，不必存在于 document 中）。
+      update: 被绑定元素所在的模板更新时调用，而不论绑定值是否变化。通过比较更新前后的绑定值，
+                可以忽略不必要的模板更新（详细的钩子函数参数见下）。
+      componentUpdated: 被绑定元素所在模板完成一次更新周期时调用。
+      unbind: 只调用一次， 指令与元素解绑时调用。
+      */
+
+       /* 有两个参数，第一个参数为名字，绑定到哪个标签上只用写v-名字，第二个参数为要调用的对应的
+       要在什么状态下触发的钩子函数 */
+      Vue.directive('a', {
+        // 每个状态的钩子函数都会有4个默认参数，第一个参数表示用该指令绑定的那个标签，他是个原生dom
+        // 第二个参数是一个对象，它保存了自定义指令的名字
+        bind(e, k) {
+          console.log(e.value)
+        }
+      }) 
+
+      const v = new Vue({
+        data: {
+
+        }
+      }).$mount('#app')
+    }
+  </script>
+</head>
+<body>
+  <div id="app">
+    <input id='in' type="text" v-a value="123">
+  </div>
+</body>
+</html>

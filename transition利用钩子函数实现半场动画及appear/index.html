@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../库/vue-2.6.11.js"></script>
+  <script type="text/javascript">
+    window.onload = function () {
+      const v = new Vue({
+        el : '#app',
+        data : {
+          flag : false,
+          listFlag : true
+        },
+        methods: {
+          // 动画的生命周期函数第一个参数必定为el，表示为要执行动画的那个元素，是个原生的jsDom对象
+          // 类似通过document.getElementByID()获取的
+          // 这个函数表示动画还没有进入之前
+          beforeEnter (el) {
+            el.style.transform = 'translate(0, 0)'
+          },
+
+          // 这个函数表示动画开始之后的样式
+          enter (el, done) {
+            // offset会强行刷新位置，所以必须有这行动画才会出来
+            el.offsetWidth
+
+            el.style.transform = 'translate(150px, 450px)'
+            el.style.transition = 'all 1s ease'
+
+            // 必须调用done让动画运行完就结束，这样会显得顺畅些，done表示绑定的after-enter函数对应的函数
+            done()
+          },
+
+          // 表示动画完成之后
+          afterEnter (el) {
+            this.flag = !this.flag
+          }
+        }
+      })
+    }
+  </script>
+  <style>
+    /* 为球设置样式 */
+    .ball {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: deeppink;
+    }
+
+    .h-enter,.h-leave-to {
+      opacity: 0;
+      transform: translateX(200px);
+    }
+
+    /* 设置整个动画进去到结束的秒数和方式 */
+    .h-enter-active,.h-leave-active {
+      transition: all 0.4s ease;
+    }
+  </style>
+</head>
+<body>
+  <div id='app'>
+      <!-- 利用appear实现出场效果,就是让他开始之前就添加了v-enter类，开始之后就移除了 -->
+      <!-- 必须用个name不然加上的类名会和下面的动画冲突 -->
+      <transition name='h' appear>
+        <ul v-if='listFlag'>
+          <li>me</li>
+          <li>connection</li>
+          <li>about us</li>
+        </ul>
+      </transition>
+      <!-- 控制上面的列表 -->
+      <button @click='listFlag = !listFlag'>点击查看列表的动画</button>
+
+    <!-- 创建一个球,并绑定动画生命周期函数,可以用tag改变它的标签类型 -->
+    <transition tag="div" @before-enter='beforeEnter' @enter='enter'  @after-enter='afterEnter'>
+      <div class="ball" v-if='flag'></div>
+    </transition>
+    
+    <!-- 控制小球的透明与显示 -->
+    <button @click='flag=!flag'>点击查看小球的动画</button>
+
+  
+  </div>
+</body>
+</html>

@@ -1,0 +1,6 @@
+const obj = {
+
+}
+
+Object.defineProperty(obj,'age',18)
+会向obj对象里面添加一个对象

@@ -1,0 +1,12 @@
+const obj = {name:'dd', age:18}
+
+const {age, name} = obj   会按照名字而不是顺序
+name就为dd，age就为18     
+
+如果function k (j) {        如果j为对象且里面包含name，age则函数可以写成 function k ({name,age})
+	j.name					相当于把对象解构了
+	j.age
+
+}
+
+如果是数组也适用上面的方法

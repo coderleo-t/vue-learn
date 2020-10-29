@@ -1,0 +1,4 @@
+在vuecli2中的build下的webpack.base.cong.js中的resolve下的alias，默认有src的别名为@
+当路径为@/assets就是找src下的assets,但如果别名是正常的英文单词，为了区分路径的特殊需要在前面加~号
+
+vuecli4自己创建vue.config.js

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- javacript代码 -->
+  <script src="../库/vue-2.6.11.js"></script>
+  <script src="../库/vue-router-3.0.1.js"></script>
+  <script type="text/javascript"> 
+  window.onload = function () {
+    // 创建组件1
+    const mycom = {
+      template:`<div>hahaha</div>`
+    }
+
+    // 创建组件2
+    const my = {
+      template:`<div>xixixi</div>`
+    }
+
+    // 创建routes
+    const routes = [
+      {path:'/',redirect:'/login'},
+      {path:'/login',component:mycom},
+      {path:'/logout',component:my}
+    ]
+
+    // 创建路由对象
+    const r = new VueRouter({
+      routes,
+      // 将地址栏的#去掉
+      mode:'history'
+    })
+
+    // 创建vue实例
+    const v = new Vue({
+      el:'#app',
+      data:{
+        name : 'Bruno Mars'
+      },
+      // 记住router内部不能加大括号
+      router:r,
+      // routers:{
+      //   r
+      // },
+      components: {
+        mycom,
+        my
+      },
+      methods: {
+        change() {
+          // $router表示的是整个路由
+          // 此行会添加hash地址login，变相的改变的组件的显示，但是会有返回，相当于栈
+          this.$router.push('/login')
+        },
+        // $router表示的是整个路由
+        // 此行会替换hash地址变为logout，变相的改变的组件的显示，没有返回，推荐使用
+        replace () {
+          console.log(this.$router)
+          this.$router.replace('/logout')
+        }
+      },
+    })
+
+  }
+
+</script>
+<style>
+  /* 路由的默认类 */
+  .router-link-active {
+    color:red
+  }
+</style>
+</head>
+<body>
+  <div id='app'>
+    <router-link to='/login'>登录</router-link>
+    <router-link to='/logout'>123</router-link>
+    <router-view></router-view>
+    
+
+    <!-- 定义一个按钮添加hash地址 -->
+    <button @click='change'>添加hash</button>
+
+      <!-- 定义一个按钮替换hash地址 -->
+    <button @click='replace'>替换hash</button>
+ 
+
+
+  </div>
+
+</body>
+</html>

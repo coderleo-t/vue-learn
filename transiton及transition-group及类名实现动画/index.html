@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../库/vue-2.6.11.js"></script>
+  <script type="text/javascript">
+    window.onload = function () {
+      const v = new Vue({
+        data : {
+          flag : true,
+          students : [
+            {
+              id : 1,
+              name : 'Bruno Mars',
+              age : 19,
+              gender : 'male'
+            },
+            {
+              id : 2,
+              name : 'Taylow Swift',
+              age : 28,
+              gender : 'female'
+            }
+          ]
+        },
+        methods: {
+          isShow () {
+            this.flag = !this.flag
+          }
+        },
+      }).$mount('#app')
+    }
+  </script>
+  <style type="text/css">
+    .v-enter,.v-leave-to {
+      opacity: 0;
+      transform: translateX(200px);
+    }
+
+    /* 设置整个动画进去到结束的秒数和方式 */
+    .v-enter-active,.v-leave-active {
+      transition: all 0.4s ease;
+    }
+  </style>
+</head>
+<body>
+  <div id='app'>
+    <!-- 当没有设置name的时候类名默认为v-xx形式，当有时v被替换 -->
+    <transition>
+      <ul v-if='flag'>
+        <li>me</li>
+        <li>connection</li>
+        <li>about us</li>
+      </ul>
+    </transition>
+
+    <!-- 使用transition-group的必须使用v-for -->
+      <table  border='2px' v-if='flag'>
+        <transition-group>
+          <tr>
+            <td>name</td>
+            <td>age</td>
+            <td>gender</td>
+          </tr>
+          <tr :key='item.id' v-for='(item,index) in students'>
+            <td>{{item.name}}</td>
+            <td>{{item.age}}</td>
+            <td>{{item.gender}}</td>
+          </tr>
+        </transition-group>
+      </table>
+
+    <button @click='isShow'>点击切换</button>
+  </div>
+</body>
+</html>

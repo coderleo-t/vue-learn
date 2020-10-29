@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app" >
+    <!-- 也可以使用定义的组件来看显示与否 -->
+    <myanim :myif='result' v-show='isShow'></myanim>
+    <button @click='result=!result'>点击</button>
+
+    <!-- <mycom></mycom> -->
+  </div>
+
+  <mycom></mycom>
+
+  <!-- 创建一个template加入组件 --> 
+  <template id="mytable">
+    <ul v-if='myif'>
+      <li>my</li>
+      <li>about us</li>
+      <li>center</li>
+      <span>kkk</span>
+    </ul>
+  </template>
+  <script src="./../库/vue-2.6.11.js"></script>
+  <script type="text/javascript">
+
+    // 定义局部组件，局部组件只在定义它的Vue实例有效，注意组件的命名不能出现大写字母，只能用横线命名法
+    var myanim = {
+      props:['myif'],
+      template:'#mytable'
+    }
+
+    // 定义全局组件,全局组件是在所有的Vue实例中都可以用，如我再new一个Vue实例也可以用
+    Vue.component('mycom',{
+      template:`<div>haha</div>`
+    })
+
+    const v = new Vue({
+      el:'#app',
+      data:{
+        result:true,
+        isShow:false
+      },
+      components:{
+        // 注册局部组件
+        // myAnim:myAnim,
+
+        // 注册组件的简化写法
+        myanim
+      }
+    })
+
+
+  </script>
+</body>
+</html>

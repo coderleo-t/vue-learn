@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- javacript代码 -->
+  <script src="../库/vue-2.6.11.js"></script>
+  <script src="../库/vue-router-3.0.1.js"></script>
+  <script type="text/javascript"> 
+  window.onload = function () {
+    // 创建组件1
+    const mycom = {
+      // 设置组件的名字,可以用在keepalive里面
+      name : 'mycom',
+
+      template:`<div>hahaha</div>`,
+      // 设置生命周期函数
+      beforeCreate() {
+        console.log('我是mycom组件创建之前的样子')
+      },
+       // 必须结合keepalive才会有效果，在组件处于活跃状态时调用
+       activated() {
+        console.log('我是mycom组件活跃状态的样子')
+      },
+
+       // 必须结合keepalive才会有效果，在组件处于不活跃状态时调用
+       deactivated() {
+        console.log('我是mycom组件不活跃状态的样子')
+       }
+    }
+
+    // 创建组件2
+    const my = {
+      // 设置组件的名字,可以用在keepalive里面
+      name : 'my',
+
+      template:`<div>xixixi</div>`,
+      // 设置生命周期函数
+      beforeCreate() {
+        console.log('我是my组件创建之前的样子')
+      },
+
+      // 必须结合keepalive才会有效果，在组件处于活跃状态时调用
+      activated() {
+        console.log('我是my组件活跃状态的样子')
+      },
+
+       // 必须结合keepalive才会有效果在组件处于不活跃状态时调用
+       deactivated() {
+        console.log('我是my组件不活跃状态的样子')
+       }
+    }
+
+    // 创建routes
+    const routes = [
+      {path:'/login',component:mycom},
+      {path:'/logout',component:my}
+    ]
+
+    // 创建路由对象
+    const r = new VueRouter({
+      routes,
+      // 将地址栏的#去掉
+      mode:'history'
+    })
+
+
+
+    // 创建vue实例
+    const v = new Vue({
+      el:'#app',
+      data:{
+        name : 'Bruno Mars'
+      },
+      router:r
+    })
+
+  }
+
+</script>
+<style>
+  /* 路由的默认类 */
+  .router-link-active {
+    color:red
+  }
+</style>
+</head>
+<body>
+  <div id='app'>
+    
+    <router-link to='/login'>登录</router-link>
+    <router-link to='/logout'>退出</router-link>
+    
+    <!-- 当keepalive包裹住routerview时，所有匹配到的组件视图都会被缓存 -->
+    <!-- exclude意思为不包括组件mycom和my的缓存 -->
+    <keep-alive exclude='mycom,my'>
+      <router-view></router-view>
+    </keep-alive>
+    
+  </div>
+</body>
+</html>

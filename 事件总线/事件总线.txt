@@ -1,0 +1,7 @@
+可以在vue的原型对象中添加一个$bus
+	Vue.prototype.$bus = new Vue()
+
+然后可以在任意组件中使用this.$bus.$emit('事件名称')
+再在任意组件中使用this.$bus.$on('事件名称', () => {    进行接收
+
+})

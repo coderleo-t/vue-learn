@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- javacript代码 -->
+  <script src="../库/vue-2.6.11.js"></script>
+  <script src="../库/vue-router-3.0.1.js"></script>
+  <script type="text/javascript"> 
+  window.onload = function () {
+    // 创建组件1
+    const mycom = {
+      template:`<div>hahaha</div>`
+    }
+
+    // 创建组件2
+    const my = {
+      template:`<div>xixixi</div>`
+    }
+
+    // 创建routes
+    const routes = [
+      // 为这个路由组件设置路由独享守卫，to和form和全局导航守卫一样，只不过只在切换该组件有效
+      {path:'/login',component:mycom,beforeEnter: (to, from, next) => {
+        console.log('哈哈')
+      }},
+
+      
+      {path:'/logout',component:my,meta:{title:'退出'}}
+    ]
+
+    // 创建路由对象
+    const r = new VueRouter({
+      routes,
+      // 将地址栏的#去掉
+      mode:'history'
+    })
+
+
+    // 创建vue实例
+    const v = new Vue({
+      el:'#app',
+      data:{
+        name : 'Bruno Mars'
+      },
+      router:r,
+      components: {
+        mycom,
+        my
+      }
+    })
+
+  }
+
+</script>
+<style>
+  /* 路由的默认类 */
+  .router-link-active {
+    color:red
+  }
+</style>
+</head>
+<body>
+  <div id='app'>
+    <router-link to='/login'>登录</router-link>
+    <router-link to='/logout'>123</router-link>
+    <router-view></router-view>
+  </div>
+</body>
+</html>

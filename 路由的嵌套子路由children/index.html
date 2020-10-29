@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- javacript代码 -->
+  <script src="../库/vue-2.6.11.js"></script>
+  <script src="../库/vue-router-3.0.1.js"></script>
+  <script type="text/javascript"> 
+  window.onload = function () {
+    // 创建组件1
+    const account = {
+     //子路由的内容必须应用到父组件里面
+      template:`
+      <div>
+        <h1>这是Account组件</h1>
+        <router-link to='/account/login' tag='button'>登录</router-link>
+        <router-link to='/account/register' tag='button'>注册</router-link>
+
+        子路由要想显示必须也在父组件上放上router-view
+        <router-view><router-view>
+      </div>`
+    }
+
+       // 创建组件2
+       const login = {
+      template:`<h3>登录</h3>`
+    }
+
+        // 创建组件3
+      const register = {
+      template:`<h3>注册</h3>`
+    }
+
+    // 创建routes
+    const routes = [
+      { path:'/account',component:account,children:[
+        // 子路由里面的路径可以直接写后面的路径
+      {path: 'login', component: login},
+      {path: 'register', component: register}
+      ]},
+      
+      
+    ]
+
+    // 创建路由对象
+    const router = new VueRouter({
+      routes
+    })
+
+    const v = new Vue({
+      el:'#app',
+      // 当路由被注册时也会注册相应的组件
+      router
+    })
+
+  }
+
+</script>
+<style>
+  /* 路由的默认类,同一级的路由共用一个类，而不同级的类可以一起用*/
+  .router-link-active {
+    color:red
+  }
+</style>
+</head>
+<body>
+  <div id='app'>
+
+    <router-link to='/account' tag='button'>Account</router-link>
+    <router-view></router-view>
+ 
+
+
+  </div>
+
+</body>
+</html>

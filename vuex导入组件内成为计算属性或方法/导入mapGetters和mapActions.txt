@@ -1,0 +1,14 @@
+在vue组件中导入
+import {mapGetters,mapActions} from 'vuex'
+
+mapGetters使用：在组件的计算属性中写：computed: {
+		...mapGetters(['getNumber'])   数组里面为原vuex里面getters里面的方法
+		...mapGetters({
+			'get':'getNumbers'    也可以使用对象的方法给它取别名
+			})
+	}
+
+mapActions的使用：在组件的方法中写：methods: {
+		...mapActions([])    里面的写法跟上面的一样
+		...mapActions({})    里面的写法跟上面的一样
+	}
